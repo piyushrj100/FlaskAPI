@@ -85,13 +85,15 @@ class Video(Resource) :
 
 
 
-    
-    # def  delete(self,video_id) :
-    #     abort_if_video_doesnt_exist(video_id)
-    #     del videos[video_id]
-    #     return '', 204
-
-
+    @marshal_with(resource_fields)
+    def  delete(self,video_id) :
+        result = VideoModel.query.filter_by(id=video_id).first()
+        if not result :
+            abort(403)
+        db.session.delete(result)
+        db.session.commit()
+        return '', 204
+        
 
 api.add_resource(Video, "/video/<int:video_id>")
 
