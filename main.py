@@ -60,6 +60,8 @@ class Video(Resource) :
             abort(404, message="Could not find Video Id....")
         return result
     
+
+    #using put as we do not want duplicate resources created. PUT is idempotent
     @marshal_with(resource_fields)
     def put(self, video_id) :
         args = video_put_args.parse_args()
